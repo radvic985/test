@@ -31,7 +31,7 @@ class BookingController extends Controller
 
         $slot = Workshop::getSpot($data['bookWorkshop']['workshop_id']);
         if ($slot['slot'] - Booking::getGuestsNumber($data['bookWorkshop']['workshop_id']) - count($data['guests']) < 0) {
-            echo false;
+            return response('You have not booked workshop spots', 400);
         } else {
             $book_id = Booking::create($data['bookWorkshop'])->id;
 
@@ -39,8 +39,7 @@ class BookingController extends Controller
                 $item['booking_id'] = $book_id;
                 Guest::create($item);
             }
-
-            echo true;
+            return response('You have booked workshop spots successfully', 200);
         }
     }
 

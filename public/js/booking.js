@@ -95,21 +95,20 @@ $(document).ready(function () {
                         'guests': guests
                     };
 
-                    $.post("/ajax/book-workshop", bookWorkshop, function (success) {
-                        console.log(success);
-                        if (success) {
-                            $('.modal-text').text('You have booked workshop spots successfully');
-                            $("#modal").modal().on('hidden.bs.modal', function () {
-                                window.location.reload();
-                            });
-                        }
-                        else {
-                            $('.modal-text').text('You have not booked workshop spots');
-                            $("#modal").modal().on('hidden.bs.modal', function () {
-                                window.location.reload();
-                            });
-                        }
-                    });
+                    $.post("/ajax/book-workshop", bookWorkshop, function (responseTxt, statusTxt) {
+                            if(statusTxt === "success") {
+                                $('.modal-text').text(responseTxt);
+                                $("#modal").modal().on('hidden.bs.modal', function () {
+                                    window.location.reload();
+                                });
+                            }
+                            else {
+                                $('.modal-text').text(responseTxt);
+                                $("#modal").modal().on('hidden.bs.modal', function () {
+                                    window.location.reload();
+                                });
+                            }
+                        });
                 }
             });
         }
